@@ -28,10 +28,10 @@ export function LawGuide() {
       default:
         return ""
     }
+  }
 
   // Get image for a specific law (fallback to category image)
   const getLawImageForLaw = (law, categoryId) => law?.image || getLawImage(categoryId)
-  }
 
   const lawCategories = [
     {
@@ -312,7 +312,36 @@ export function LawGuide() {
         </CardContent>
       </Card>
 
-      
+      {/* Legal Help Footer */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5" /> تحتاج مساعدة قانونية؟
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-gray-700">
+            إذا كنت بحاجة إلى استشارة قانونية أو مساعدة في فهم حقوقك، يمكنك التواصل مع:
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="p-4 border rounded-lg bg-gray-50">
+              <div className="font-bold text-gray-900">نقابة المحامين</div>
+              <p className="text-sm text-gray-700 mt-1">للعثور على محامٍ مرخص والاستفادة من الاستشارة القانونية.</p>
+              <Button variant="outline" className="mt-3 bg-transparent" asChild>
+                <a href="#" target="_blank" rel="noopener noreferrer">زيارة الموقع</a>
+              </Button>
+            </div>
+            <div className="p-4 border rounded-lg bg-gray-50">
+              <div className="font-bold text-gray-900">المساعدة القضائية</div>
+              <p className="text-sm text-gray-700 mt-1">خدمات المساعدة القانونية المجانية أو منخفضة التكلفة للفئات المستحقة.</p>
+              <Button variant="outline" className="mt-3 bg-transparent" asChild>
+                <a href="https://www.justice.gov.ma/" target="_blank" rel="noopener noreferrer">طلب المعلومات</a>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
-  )
-}
+    )
+  
+  }

@@ -8,6 +8,7 @@ import { ReportForm } from "@/components/report-form"
 import { IncidentsList } from "@/components/incidents-list"
 import { ProfilePage } from "@/components/profile-page"
 import { LawGuide } from "@/components/law-guide" // Import LawGuide component
+import { LegalAwareness } from "@/components/legal-awareness"
 import { Shield, MapPin, Eye, Smartphone, Clock, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -21,7 +22,7 @@ function AppContent() {
 
   const handleLogin = (userData) => {
     setUser(userData)
-    setCurrentPage("home") // Redirect to home after login
+    setCurrentPage("awareness") // Redirect to awareness after login
   }
 
   const handleLogout = () => {
@@ -360,8 +361,10 @@ function AppContent() {
         return <ReportForm onSubmit={handleReportSubmit} onCancel={() => setCurrentPage("home")} />
       case "incidents":
         return <IncidentsList incidents={incidents} />
+      case "awareness":
+        return <LegalAwareness />
       case "profile":
-        return <ProfilePage />
+        return <ProfilePage incidents={incidents} user={user} />
       default:
         return user ? <HomePage onPageChange={setCurrentPage} incidents={incidents} /> : renderCurrentPage()
     }

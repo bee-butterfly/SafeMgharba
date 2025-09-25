@@ -1,6 +1,6 @@
 "use client"
 
-import { Shield, Home, AlertTriangle, List, User, Scale, LogIn, UserPlus } from "lucide-react"
+import { Shield, Home, AlertTriangle, List, User, Scale, LogIn, UserPlus, PlayCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageSelector } from "./language-selector"
 import { LoginModal } from "./login-modal"
@@ -19,6 +19,7 @@ export function Navigation({ currentPage, onPageChange, user, onLogin, onLogout 
     { id: "report", icon: AlertTriangle, label: t("report") },
     { id: "incidents", icon: List, label: t("incidents") },
     { id: "law-guide", icon: Scale, label: t("lawGuide") },
+    { id: "awareness", icon: PlayCircle, label: language === "ar" ? "التوعية" : language === "fr" ? "Sensibilisation" : "Awareness" },
     { id: "profile", icon: User, label: t("profile") },
   ]
 
