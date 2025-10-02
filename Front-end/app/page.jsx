@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { RightsPage } from "@/components/rights"
 import { LanguageProvider } from "@/contexts/language-context"
 import { Navigation } from "@/components/navigation"
 import { HomePage } from "@/components/home-page"
@@ -363,10 +364,12 @@ function AppContent() {
         return <IncidentsList incidents={incidents} />
       case "awareness":
         return <LegalAwareness />
+      case "rights":
+        return <RightsPage />
       case "profile":
         return <ProfilePage incidents={incidents} user={user} />
       default:
-        return user ? <HomePage onPageChange={setCurrentPage} incidents={incidents} /> : renderCurrentPage()
+       return <HomePage onPageChange={setCurrentPage} incidents={incidents} />
     }
   }
 

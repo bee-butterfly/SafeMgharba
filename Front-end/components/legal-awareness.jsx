@@ -1,10 +1,77 @@
 "use client"
 
+import { useState } from "react"
 import { Shield, PlayCircle, BookOpen, AlertTriangle, CheckCircle, ArrowRight } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/contexts/language-context"
 import { useTranslation } from "@/lib/i18n"
+
+function VideoPlayer({ video }) {
+  const [hasError, setHasError] = useState(false)
+
+  return (
+    <div className="rounded-lg overflow-hidden border shadow-lg bg-white">
+      <div className="aspect-video bg-black relative">
+        {!hasError ? (
+          <iframe
+            className="w-full h-full"
+            src={video.embedUrl}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            loading="lazy"
+            onError={() => setHasError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-900">
+            <div className="text-center text-white p-4">
+              <PlayCircle className="h-12 w-12 mx-auto mb-3 text-red-500" />
+              <p className="text-sm mb-3">لا يمكن تحميل الفيديو</p>
+              <a
+                href={video.watchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2 transition-colors duration-200"
+              >
+                <PlayCircle className="h-4 w-4" />
+                مشاهدة على YouTube
+              </a>
+            </div>
+          </div>
+        )}
+        
+        {/* Hover overlay */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+          <a
+            href={video.watchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200"
+          >
+            <PlayCircle className="h-5 w-5" />
+            مشاهدة على YouTube
+          </a>
+        </div>
+      </div>
+      <div className="p-4">
+        <h3 className="font-bold text-gray-900 text-sm mb-2">{video.title}</h3>
+        <p className="text-xs text-gray-600 mb-3">{video.channel}</p>
+        <a
+          href={video.watchUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center text-blue-600 hover:text-blue-700 text-xs font-medium transition-colors duration-200"
+        >
+          <PlayCircle className="h-4 w-4 ml-1" />
+          مشاهدة على YouTube
+        </a>
+      </div>
+    </div>
+  )
+}
 
 export function LegalAwareness() {
   const { language } = useLanguage()
@@ -12,20 +79,24 @@ export function LegalAwareness() {
 
   const videos = [
     {
-      title: "حقوقك عند التوقيف وكيف تتصرف",
-      channel: "ضابط سابق (توعوي)",
-      embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      title: "المسطرة الجنائية 2025: من يراقب الفاسدين الآن؟",
+      channel: " (توعوي)",
+      embedUrl: "https://www.youtube.com/embed/ommbE5gKusw",
+      watchUrl: "https://youtu.be/ommbE5gKusw?si=2tVr0DHvRzw1_A8c",
+    },
+    {
+      title: "هل للملك سلطة إعفاء حكومة أخنوش؟",
+      channel: "توعية",
+      embedUrl: "https://www.youtube.com/embed/L0BVNSwqx0U",
+      watchUrl: "https://youtu.be/L0BVNSwqx0U?si=qkdX8B8RcGJogxJv",
     },
     {
       title: "كيف تبلغ عن جريمة بشكل قانوني وآمن",
-      channel: "خبير قانوني مغربي",
-      embedUrl: "https://www.youtube.com/embed/oHg5SJYRHA0",
+      channel: "خبير مغربي",
+      embedUrl: "https://www.youtube.com/embed/o2rMS1gePo0",
+      watchUrl: "https://youtu.be/o2rMS1gePo0?si=DDga_ARA9pqyNz-f",
     },
-    {
-      title: "نصائح مرورية من ضابط سابق",
-      channel: "توعية مرورية",
-      embedUrl: "https://www.youtube.com/embed/ysz5S6PUM-U",
-    },
+   
   ]
 
   const rights = [
@@ -114,29 +185,23 @@ export function LegalAwareness() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {videos.map((v, i) => (
-              <div key={i} className="rounded-lg overflow-hidden border">
-                <div className="aspect-video bg-black">
-                  <iframe
-                    className="w-full h-full"
-                    src={v.embedUrl}
-                    title={v.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
-                <div className="p-3">
-                  <h3 className="font-bold text-gray-900 text-sm">{v.title}</h3>
-                  <p className="text-xs text-gray-600 mt-1">{v.channel}</p>
-                </div>
-              </div>
+            {videos.map((video, i) => (
+              <VideoPlayer key={i} video={video} />
             ))}
           </div>
-          <p className="text-xs text-gray-500 mt-3">
-            ملاحظة: يمكنك تزويدنا بروابط القنوات المغربية لضباط سابقين وسنقوم بإضافتها هنا مباشرة.
-          </p>
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-blue-800">
+                <p className="font-medium mb-2">ملاحظات مهمة حول الفيديوهات:</p>
+                <ul className="space-y-1 text-xs">
+                  <li>• إذا لم تظهر الفيديوهات، انقر على "مشاهدة على YouTube" للوصول المباشر</li>
+                  <li>• يمكنك تزويدنا بروابط القنوات المغربية لضباط سابقين وخبراء قانونيين</li>
+                  <li>• جميع الفيديوهات من مصادر تعليمية وتوعوية موثوقة</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

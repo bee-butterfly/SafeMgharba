@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const usersRouter = require('./routes/users');
 const reportsRouter = require('./routes/reports');
+const rightsRouter = require('./routes/rights');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/users', usersRouter);
 app.use('/reports', reportsRouter);
+app.use('/rights', rightsRouter);
 
 // Basic route
 app.get('/', (req, res) => res.send('Safemgharba backend running'));
